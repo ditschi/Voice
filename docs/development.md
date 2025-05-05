@@ -20,8 +20,7 @@ Voice uses **Ktlint** to enforce consistent code formatting.
 - Auto-fix formatting:
 
 ```sh
-./gradlew formatKotlin
-```
+ ```
 
 - To make commits fail on formatting errors, set up a pre-commit hook:
 

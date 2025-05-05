@@ -27,6 +27,17 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
+      - name: Cache Gradle files
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            .gradle
+          key: ${{ runner.os }}-gradle-combined-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-combined-
+
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v3
 
@@ -49,6 +60,7 @@ jobs:
           path: |
             artifacts/
             app/build/reports/*.html
+            app/build/outputs/apk/**/*.apk
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
