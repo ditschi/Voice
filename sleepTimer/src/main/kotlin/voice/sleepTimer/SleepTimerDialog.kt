@@ -10,16 +10,20 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Remove
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
@@ -35,6 +39,9 @@ fun SleepTimerDialog(
   onIncrementSleepTime: () -> Unit,
   onDecrementSleepTime: () -> Unit,
   onAcceptSleepTime: (Int) -> Unit,
+  isAutoSleepEnabled: Boolean,
+  onAutoSleepToggle: (Boolean) -> Unit,
+  navigateToSettings: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   ModalBottomSheet(
@@ -88,6 +95,28 @@ fun SleepTimerDialog(
           }
         },
       )
+      Spacer(modifier = Modifier.size(16.dp))
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Text(
+          text = stringResource(StringsR.string.pref_auto_sleep_timer),
+          modifier = Modifier
+            .weight(1f)
+            .clickable(onClick = navigateToSettings)
+        )
+        IconButton(onClick = navigateToSettings) {
+          Icon(
+            imageVector = Icons.Outlined.Settings,
+            contentDescription = stringResource(StringsR.string.pref_auto_sleep_timer_settings)
+          )
+        }
+        Switch(
+          checked = isAutoSleepEnabled,
+          onCheckedChange = onAutoSleepToggle
+        )
+      }
       Spacer(modifier = Modifier.size(32.dp))
     }
   }
